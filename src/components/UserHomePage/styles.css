@@ -1,0 +1,37 @@
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80vw;
+  margin: 30px;
+  justify-content: center;
+}
+.card {
+  background-color: rgb(255, 231, 242);
+  width: 200px;
+  height: 200px;
+  border: 1px solid rgb(226, 10, 100);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.card p {
+  display: flex;
+  margin: 10px;
+  height: 50px;
+  align-items: center;
+}
+#status {
+  font-weight: bold;
+}
+.formAddTech {
+  width: 310px;
+
+  margin: 0 auto 20px;
+}
+.container {
+  margin-bottom: 30px;
+}

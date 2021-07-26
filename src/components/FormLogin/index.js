@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { useHistory } from "react-router";
 import axios from "axios";
 import "./styles.css";
+import { Link } from "react-router-dom";
 const FormLogin = () => {
   const history = useHistory();
 
@@ -27,7 +28,7 @@ const FormLogin = () => {
       .post("https://kenziehub.me/sessions", data)
       .then((response) => {
         localStorage.clear();
-        localStorage.setItem("token", JSON.stringify(response.data.token));
+        localStorage.setItem("token", response.data.token);
         history.push("/home");
       })
       .catch((e) => console.log(e));
@@ -69,6 +70,9 @@ const FormLogin = () => {
           Entrar
         </Button>
       </div>
+      <p>
+        Não tem uma conta ainda? <Link to="/register">Registre-se</Link>
+      </p>
     </form>
   );
 };
