@@ -7,17 +7,12 @@ import * as yup from "yup";
 import { useHistory } from "react-router";
 import "./styles.css";
 
-const UserHomePage = () => {
+const UserHomePage = ({ setAuthentication }) => {
   const history = useHistory();
 
   const [user, setUser] = useState({});
 
   const token = window.localStorage.getItem("token");
-
-  // const [token, setToken] = useState(() => {
-  //   const localToken = localStorage.getItem("token") || "";
-  //   return JSON.parse(localToken);
-  // });
 
   const schema = yup.object().shape({
     title: yup.string().required("Campo obrigatório"),
@@ -51,32 +46,50 @@ const UserHomePage = () => {
     }
   }, [token, user.id]);
 
-  const config = { headers: { Authorizations: `Bearer ${token}` } };
+  const headers = { headers: { Authorization: `Bearer ${token}` } };
 
   const handleForm = (data) => {
     axios
-      .post("https://kenziehub.me/users/techs", data, config)
+      .post("https://kenziehub.me/users/techs", data, headers)
       .then((response) => {
-        console.log(data);
+        axios
+          .get(`https://kenziehub.me/users/${user.id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((response) => setTechs(response.data.techs));
       })
       .catch((e) => console.log(e));
   };
 
   const handleDelete = (tech) => {
-    axios.delete(`https://kenziehub.me/users/techs/${tech.id}`, config);
+    axios
+      .delete(`https://kenziehub.me/users/techs/${tech.id}`, headers)
+      .then((response) => {
+        axios
+          .get(`https://kenziehub.me/users/${user.id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((response) => setTechs(response.data.techs));
+      })
+      .catch((e) => console.log(e));
   };
+  const handleBack = () => {
+    history.push("/");
+    setAuthentication(true);
+  };
+  console.log(techs);
   return (
     <div className="container">
-      <h2>Bem-vindo, {user.name}</h2>
+      <h2>Tecnologias aprendidas:</h2>
       <div className="cardContainer">
         {techs &&
           techs.map((tech, index) => (
-            <div className="card">
-              <p key={index}>Tecnologia: {tech.title}</p>
-              <p id="status">Status: {tech.status}</p>
+            <div className="card" key={tech.id}>
+              <p id="status">Tecnologia: {tech.title}</p>
+              <p>Status: {tech.status}</p>
               <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 onClick={() => handleDelete(tech)}
               >
                 DELETAR
@@ -114,15 +127,15 @@ const UserHomePage = () => {
         </div>
 
         <div className="button">
-          <Button type="submit" variant="contained" color="secondary" fullWidth>
+          <Button type="submit" variant="contained" color="primary" fullWidth>
             Adicionar Tecnologia
           </Button>
         </div>
       </form>
       <Button
-        onClick={() => history.push("/")}
+        onClick={handleBack}
         variant="contained"
-        color="secondary"
+        color="primary"
         size="small"
       >
         Voltar

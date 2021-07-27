@@ -1,17 +1,20 @@
 import { Route, Switch } from "react-router-dom";
-import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import Techs from "../Pages/Techs";
 
-const Routes = () => {
+const Routes = ({ authentication, setAuthentication }) => {
   return (
     <>
       <Switch>
         <Route exact path="/">
-          <Login />
+          <Login
+            authentication={authentication}
+            setAuthentication={setAuthentication}
+          />
         </Route>
-        <Route exact path="/home">
-          <Home />
+        <Route exact path="/techs">
+          <Techs setAuthentication={setAuthentication} />
         </Route>
         <Route exact path="/register">
           <Register />

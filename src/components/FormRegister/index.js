@@ -38,8 +38,8 @@ const FormRegister = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleForm)}>
-      <span>Preencha os dados abaixo:</span>
+    <form onSubmit={handleSubmit(handleForm)} class="formRegister">
+      <h2>Preencha os dados abaixo:</h2>
       <div>
         <TextField
           fullWidth
@@ -125,7 +125,7 @@ const FormRegister = () => {
         <Button
           type="submit"
           variant="contained"
-          color="secondary"
+          color="primary"
           endIcon={<Icon>send</Icon>}
           fullWidth
         >

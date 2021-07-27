@@ -6,10 +6,9 @@
   justify-content: center;
 }
 .card {
-  background-color: rgb(255, 231, 242);
   width: 200px;
   height: 200px;
-  border: 1px solid rgb(226, 10, 100);
+  border: 1px solid #3f51b5;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,4 +33,7 @@
 }
 .container {
   margin-bottom: 30px;
+}
+h3 {
+  color: #3f51b5;
 }
