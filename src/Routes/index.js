@@ -3,18 +3,15 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Techs from "../Pages/Techs";
 
-const Routes = ({ authentication, setAuthentication }) => {
+const Routes = () => {
   return (
     <>
       <Switch>
         <Route exact path="/">
-          <Login
-            authentication={authentication}
-            setAuthentication={setAuthentication}
-          />
+          <Login />
         </Route>
         <Route exact path="/techs">
-          <Techs setAuthentication={setAuthentication} />
+          <Techs />
         </Route>
         <Route exact path="/register">
           <Register />

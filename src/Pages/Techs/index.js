@@ -1,6 +1,6 @@
 import UserHomePage from "../../components/UserHomePage";
 
-const Techs = ({ setAuthentication }) => {
-  return <UserHomePage setAuthentication={setAuthentication} />;
+const Techs = () => {
+  return <UserHomePage />;
 };
 export default Techs;

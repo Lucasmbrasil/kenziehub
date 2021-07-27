@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { useHistory } from "react-router";
 import "./styles.css";
 
-const UserHomePage = ({ setAuthentication }) => {
+const UserHomePage = () => {
   const history = useHistory();
 
   const [user, setUser] = useState({});
@@ -32,8 +32,8 @@ const UserHomePage = ({ setAuthentication }) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => setUser(response.data))
-      .catch((e) => console.log(e));
-  }, [token]);
+      .catch((e) => history.push("/"));
+  }, [token, history]);
 
   useEffect(() => {
     if (user.id !== undefined) {
@@ -75,9 +75,8 @@ const UserHomePage = ({ setAuthentication }) => {
   };
   const handleBack = () => {
     history.push("/");
-    setAuthentication(true);
+    localStorage.clear();
   };
-  console.log(techs);
   return (
     <div className="container">
       <h2>Tecnologias aprendidas:</h2>

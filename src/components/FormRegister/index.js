@@ -38,7 +38,7 @@ const FormRegister = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleForm)} class="formRegister">
+    <form onSubmit={handleSubmit(handleForm)} className="formRegister">
       <h2>Preencha os dados abaixo:</h2>
       <div>
         <TextField
