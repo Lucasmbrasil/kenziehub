@@ -1,7 +1,6 @@
 .cardContainer {
   display: flex;
   flex-wrap: wrap;
-  width: 80vw;
   margin: 30px;
   justify-content: center;
 }
@@ -33,7 +32,11 @@
 }
 .container {
   margin-bottom: 30px;
+  width: 100vw;
 }
 h3 {
   color: #3f51b5;
+}
+.backButtonUser {
+  display: flex;
 }

@@ -6,6 +6,10 @@ import { useHistory } from "react-router";
 import axios from "axios";
 import "./styles.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
 const FormLogin = () => {
   const history = useHistory();
   const schema = yup.object().shape({
@@ -21,7 +25,7 @@ const FormLogin = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
-
+  const [loginError, setLoginError] = useState(false);
   const handleForm = (data) => {
     axios
       .post("https://kenziehub.me/sessions", data)
@@ -30,11 +34,27 @@ const FormLogin = () => {
         localStorage.setItem("token", response.data.token);
         history.push("/techs");
       })
-      .catch((e) => console.log(e));
+      .catch((e) => setLoginError(true));
+  };
+  function Alert(props) {
+    return <MuiAlert variant="filled" {...props} />;
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setLoginError(false);
   };
 
   return (
     <>
+      <Snackbar open={loginError} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          E-mail ou senha inválidos!
+        </Alert>
+      </Snackbar>
       <form onSubmit={handleSubmit(handleForm)}>
         <h2>Faça seu login:</h2>
         <div>

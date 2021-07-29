@@ -1,4 +1,5 @@
 import { Button, TextField } from "@material-ui/core";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -6,6 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useHistory } from "react-router";
 import "./styles.css";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 const UserHomePage = () => {
   const history = useHistory();
@@ -14,6 +17,8 @@ const UserHomePage = () => {
 
   const token = window.localStorage.getItem("token");
 
+  const headers = { headers: { Authorization: `Bearer ${token}` } };
+  const [techsError, setTechsError] = useState(false);
   const schema = yup.object().shape({
     title: yup.string().required("Campo obrigatório"),
     status: yup.string().required("Campo obrigatório"),
@@ -46,8 +51,6 @@ const UserHomePage = () => {
     }
   }, [token, user.id]);
 
-  const headers = { headers: { Authorization: `Bearer ${token}` } };
-
   const handleForm = (data) => {
     axios
       .post("https://kenziehub.me/users/techs", data, headers)
@@ -58,7 +61,7 @@ const UserHomePage = () => {
           })
           .then((response) => setTechs(response.data.techs));
       })
-      .catch((e) => console.log(e));
+      .catch((e) => setTechsError(true));
   };
 
   const handleDelete = (tech) => {
@@ -73,12 +76,32 @@ const UserHomePage = () => {
       })
       .catch((e) => console.log(e));
   };
+  function Alert(props) {
+    return <MuiAlert variant="filled" {...props} />;
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setTechsError(false);
+  };
+
   const handleBack = () => {
     history.push("/");
     localStorage.clear();
   };
   return (
     <div className="container">
+      <div className="backButtonUser">
+        <ArrowBackIcon id="backButton" size="small" onClick={handleBack} />
+      </div>
+      <Snackbar open={techsError} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          Tecnologia já cadastrada!
+        </Alert>
+      </Snackbar>
       <h2>Tecnologias aprendidas:</h2>
       <div className="cardContainer">
         {techs &&
@@ -131,14 +154,6 @@ const UserHomePage = () => {
           </Button>
         </div>
       </form>
-      <Button
-        onClick={handleBack}
-        variant="contained"
-        color="primary"
-        size="small"
-      >
-        Voltar
-      </Button>
     </div>
   );
 };

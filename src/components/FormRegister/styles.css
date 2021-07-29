@@ -4,6 +4,27 @@
 .formRegister {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.backButton {
+  width: 100%;
+  text-align: left;
+
+  margin-bottom: 10px;
+}
+#backButton {
+  border: 2px solid #3f51b5;
+  border-radius: 50%;
+  margin-top: 20px;
+  text-align: left;
+  font-size: 1.2rem;
+  color: #3f51b5;
+  margin-left: 5%;
+}
+#backButton:hover {
+  cursor: pointer;
+  color: #303f9f;
+}
+.formRegister h2 {
+  margin-top: 0px;
 }
